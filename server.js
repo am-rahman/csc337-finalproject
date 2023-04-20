@@ -4,14 +4,14 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 3000;
 
 // Connect to MongoDB database
-mongoose.connect('mongodb://localhost/microblog', { useNewUrlParser: true });
+mongoose.connect('mongodb://localhost/chatter', { useNewUrlParser: true });
 
 // Create schema for blog post
 const postSchema = new mongoose.Schema({
-    title: String,
+    user: String,
     body: String,
     date: { type: Date, default: Date.now },
 });
@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public_html')));
 // Create route for creating a new blog post
 app.post('/posts', async (req, res) => {
     const post = new Post({
-        title: req.body.title,
+        user: req.body.user,
         body: req.body.body,
     });
     try {
@@ -52,5 +52,5 @@ app.get('/posts', (req, res) => {
 
 // Start the server
 app.listen(port, () => {
-    console.log(`Server listening on port ${port}`);
+    console.log(`Server listening at http://localhost:${port}`);
 });

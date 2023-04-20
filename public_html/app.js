@@ -5,19 +5,19 @@ const postList = document.getElementById('post-list');
 newPostForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const formData = new FormData(newPostForm);
-    const title = formData.get('title');
+    const user = formData.get('user');
     const body = formData.get('body');
     fetch('/posts', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ title, body })
+        body: JSON.stringify({ user, body })
     })
         .then(response => response.json())
         .then((post) => {
             const li = document.createElement('li');
-            li.innerText = `${post.title} - ${post.body}`;
+            li.innerHTML = `<strong>${post.user}</strong> - ${post.body}`;
             postList.appendChild(li);
         })
         .catch((error) => {
@@ -31,7 +31,7 @@ fetch('/posts')
     .then((posts) => {
         posts.forEach((post) => {
             const li = document.createElement('li');
-            li.innerText = `${post.title} - ${post.body}`;
+            li.innerHTML = `<strong>${post.user}</strong> - ${post.body}`;
             postList.appendChild(li);
         });
     })
