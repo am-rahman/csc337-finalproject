@@ -1,11 +1,10 @@
 /**
- * Creates the Post model and exports it.
+ * @fileoverview Create model for Post document and export it.
  */
 
 const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema.Types;
 
-//Creating a schema for Post
 const postSchema = new mongoose.Schema({
     user: {
         type: ObjectId,
@@ -13,7 +12,7 @@ const postSchema = new mongoose.Schema({
         required: true,
     },
     body: { type: String, required: true },
-    time: { type: Date, default: Date.now },
+    time: { type: Number, default: process.hrtime.bigint() },
     likes: [ObjectId],
     comments: [ObjectId],
 });
@@ -21,4 +20,14 @@ const postSchema = new mongoose.Schema({
 //Creating a conpound index by user (ascending) and time (descending)
 postSchema.index({ user: 1, time: -1 });
 
-module.exports = mongoose.model("Post", postSchema);
+/**
+ * @typedef {Object} PostModel
+ * @property {ObjectId} user - The user who created the post
+ * @property {String} body - The body of the post
+ * @property {Number} time - The time the post was created (leave empty to use current time)
+ * @property {ObjectId[]} likes - The users who liked the post
+ * @property {ObjectId[]} comments - The comments on the post
+ */
+const Post = mongoose.model("Post", postSchema);
+
+module.exports = Post;
