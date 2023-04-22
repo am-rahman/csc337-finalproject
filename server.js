@@ -25,20 +25,32 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //Using express-validator to validate the input
 const userValidationRules = [
+    // Username validation
     check("username")
         .trim()
-        .isLength({ min: 5, max: 20 })
-        .withMessage("Username must be between 5-20 characters long"),
+        .isAlphanumeric()
+        .withMessage("Username must contain only letters and numbers")
+        .isLength({ min: 3, max: 15 })
+        .withMessage("Username must be between 3 and 15 characters long"),
 
-    check("password")
-        .trim()
-        .isLength({ min: 8 })
-        .withMessage("Password must be at least 8 characters long"),
-
+    // Email validation
     check("email")
-        .trim()
         .isEmail()
-        .withMessage("Email must be a valid email address"),
+        .withMessage("Invalid email format")
+        .normalizeEmail(),
+
+    // Password validation
+    check("password")
+        .isLength({ min: 8 })
+        .withMessage("Password must be at least 8 characters long")
+        .matches(/\d/)
+        .withMessage("Password must contain at least one number")
+        .matches(/[A-Z]/)
+        .withMessage("Password must contain at least one uppercase letter")
+        .matches(/[a-z]/)
+        .withMessage("Password must contain at least one lowercase letter")
+        .matches(/[!@#$%^&*(),.?":{}|<>]/)
+        .withMessage("Password must contain at least one special character"),
 ];
 
 //TODO: Add validation rules for post
@@ -48,12 +60,6 @@ const postValidationRules = [
         .isLength({ min: 1, max: 200 })
         .withMessage("Post must be between 1 and 200 characters long"),
 ];
-
-//Using mongo-sanitize to sanitize the input
-app.use((req, res, next) => {
-    req.body = sanitize(req.body);
-    next();
-});
 
 //Serving static files from public_html folder using Express.static
 app.use(express.static(path.join(__dirname, "public_html")));

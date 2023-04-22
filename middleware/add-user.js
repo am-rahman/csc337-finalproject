@@ -5,6 +5,7 @@
 
 const bcrypt = require("bcrypt"); //Bcrypt is used to hash passwords
 const User = require("../models/user"); //Importing the User model
+const sanitize = require("mongo-sanitize");
 
 /**
  * Creates a new user in the database after verifying that the username and email are
@@ -15,8 +16,14 @@ const User = require("../models/user"); //Importing the User model
  * @returns
  */
 async function addUser(req, res) {
-    const existingUser = await User.findOne({ username: req.body.username });
-    const existingEmail = await User.findOne({ email: req.body.email });
+    const { username, email, password } = req.body; //Extracting the username, email and password from the request body
+
+    const existingUser = await User.findOne({
+        username: { $regex: new RegExp(`^${username}$`, "i") },
+    });
+    const existingEmail = await User.findOne({
+        email: { $regex: new RegExp(`^${email}$`, "i") },
+    });
     res.set("Content-Type", "application/json");
 
     //check if username or email already exists
@@ -29,11 +36,11 @@ async function addUser(req, res) {
         res.status(409); //If email already exists, sending Conflict status and the error message
         res.send({ message: "Email already exists" });
     } else {
-        const hashedPassword = await encryptPassword(req.body.password); //Encrypting the password using bcrypt
+        const hashedPassword = await encryptPassword(password); //Encrypting the password using bcrypt
         //Create new user document
         const newUser = new User({
-            username: req.body.username,
-            email: req.body.email,
+            username: username,
+            email: email,
             password: hashedPassword,
         });
         console.log(`User created: ${newUser}`);
@@ -41,7 +48,7 @@ async function addUser(req, res) {
         try {
             await newUser.save(); //Saving the new user in the database
             res.status(201); //Sending success status and the success message
-            res.send({ message: `Welcome to chatter ${req.body.username}` });
+            res.send({ message: `Welcome to chatter ${username}` });
         } catch (err) {
             res.status(500); //If error occurs, sending Internal Server Error and the error message
             res.send({ message: "Server error, please try again later." });
