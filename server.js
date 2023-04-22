@@ -52,7 +52,13 @@ app.get("/posts/get", (req, res) => {
 });
 
 //Creating POST endpoint for creating a new user in '/users' route
+const addUser = require("./middleware/add-user"); //Importing addUser function from middleware/add-user.js
 app.post("/users/add", async (req, res) => {
+    console.log(req.body);
+    // console.log(`Username: ${req.body.username}`);
+    // console.log(`Password: ${req.body.password}`);
+    // console.log(`Email: ${req.body.email}`);
+
     addUser(req, res); //Calling addUser function from middleware/add-user.js
 });
 
