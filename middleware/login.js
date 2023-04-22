@@ -7,22 +7,26 @@ async function login(req, res) {
     const { username, password } = req.body;
 
     // Finding a user with the provided username
-    const user = await User.findOne({ username: username });
+    const user = await User.findOne({
+        username: { $regex: new RegExp(`^${username}$`, "i") },
+    });
 
     // If user is not found, send an error response
     if (!user) {
         res.status(401);
-        res.send({ message: "User not found" });
+        res.send({ message: "Incorrect username" });
     } else {
         // If user is found, compare the provided password with the stored hashed password
         const match = await bcrypt.compare(password, user.password);
 
         // If the passwords match, set a cookie and send a success response
         if (match) {
-            const expireAfter = 24 * 60 * 60 * 1000; // Cookie expiration time (1 day)
+            req.session.user = {
+                id: user._id,
+                username: user.username,
+            };
             res.status(200);
-            res.cookie("logged-in", user._id, { expireAfter }); // Setting a cookie named "logged-in" with the user's ID as value
-            res.send({ message: "Login successful" });
+            res.redirect("/chat");
         } else {
             // If the passwords don't match, send an error response
             res.status(401);
