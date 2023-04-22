@@ -149,6 +149,50 @@ describe("Users", () => {
                     done();
                 });
         }).timeout(10000);
+
+        //test for creating a new user with an invalid email
+        it("it should not create a user with an invalid email", (done) => {
+            const user = {
+                username: "testuser",
+                email: "testuserexample.com",
+                password: "password",
+            };
+            chai.request(server)
+                .post("/users/add")
+                .send(user)
+                .end((err, res) => {
+                    res.should.have.status(422);
+                    res.body.should.be.a("object");
+                    res.body.errors.should.be.a("array");
+                    res.body.errors[0].should.have.property(
+                        "msg",
+                        "Email must be a valid email address"
+                    );
+                    done();
+                });
+        }).timeout(10000);
+
+        //test for creating a new user with an invalid password
+        it("it should not create a user with an invalid password", (done) => {
+            const user = {
+                username: "testuser",
+                email: "testuser@example.com",
+                password: "pass",
+            };
+            chai.request(server)
+                .post("/users/add")
+                .send(user)
+                .end((err, res) => {
+                    res.should.have.status(422);
+                    res.body.should.be.a("object");
+                    res.body.errors.should.be.a("array");
+                    res.body.errors[0].should.have.property(
+                        "msg",
+                        "Password must be at least 8 characters long"
+                    );
+                    done();
+                });
+        }).timeout(10000);
     });
 });
 

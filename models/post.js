@@ -13,8 +13,8 @@ const postSchema = new mongoose.Schema({
     },
     body: { type: String, required: true },
     time: { type: Number, default: process.hrtime.bigint() },
-    likes: [ObjectId],
-    comments: [ObjectId],
+    likes: [{ type: ObjectId, ref: "User" }],
+    comments: [{ type: ObjectId, ref: "Comment" }],
 });
 
 //Creating a conpound index by user (ascending) and time (descending)

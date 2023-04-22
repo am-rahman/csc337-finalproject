@@ -18,7 +18,8 @@ async function addUser(req, res) {
     const existingUser = await User.findOne({ username: req.body.username });
     const existingEmail = await User.findOne({ email: req.body.email });
     res.set("Content-Type", "application/json");
-    //cheack if username or email already exists
+
+    //check if username or email already exists
     if (existingUser) {
         console.log("User already exists");
         console.log(`Existing User: ${existingUser}`);
@@ -29,7 +30,6 @@ async function addUser(req, res) {
         res.send({ message: "Email already exists" });
     } else {
         const hashedPassword = await encryptPassword(req.body.password); //Encrypting the password using bcrypt
-
         //Create new user document
         const newUser = new User({
             username: req.body.username,
@@ -48,8 +48,6 @@ async function addUser(req, res) {
         }
     }
 }
-
-async function checkExisting(req, res) {}
 
 /**
  * Uses the bcrypt module to encrypt the password

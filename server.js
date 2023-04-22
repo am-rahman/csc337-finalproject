@@ -3,6 +3,9 @@ const express = require("express"); //Express is a web framework for building AP
 const mongoose = require("mongoose"); //Mongoose helps to work with MongoDB more easily
 const bodyParser = require("body-parser"); //Body-parser is used to extract the entire body portion of an incoming request stream
 const path = require("path"); //Path is used to work with file and directory paths
+const { check } = require("express-validator"); //Express-validator is used to validate the input
+const sanitize = require("mongo-sanitize"); //Mongo-sanitize is used to sanitize the input
+const validate = require("./middleware/validate"); //Custom middleware to validate the input
 
 const app = express();
 const port = 3000;
@@ -19,6 +22,38 @@ const Post = require("./models/post");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+//Using express-validator to validate the input
+const userValidationRules = [
+    check("username")
+        .trim()
+        .isLength({ min: 5, max: 20 })
+        .withMessage("Username must be between 5-20 characters long"),
+
+    check("password")
+        .trim()
+        .isLength({ min: 8 })
+        .withMessage("Password must be at least 8 characters long"),
+
+    check("email")
+        .trim()
+        .isEmail()
+        .withMessage("Email must be a valid email address"),
+];
+
+//TODO: Add validation rules for post
+const postValidationRules = [
+    check("postBody")
+        .trim()
+        .isLength({ min: 1, max: 200 })
+        .withMessage("Post must be between 1 and 200 characters long"),
+];
+
+//Using mongo-sanitize to sanitize the input
+app.use((req, res, next) => {
+    req.body = sanitize(req.body);
+    next();
+});
 
 //Serving static files from public_html folder using Express.static
 app.use(express.static(path.join(__dirname, "public_html")));
@@ -38,6 +73,7 @@ app.post("/posts/add", async (req, res) => {
     }
 });
 
+//TODO: Delete/comment endpoint after development
 // Creating GET endpoint for retrieving all posts in '/posts' route
 app.get("/posts/get", (req, res) => {
     Post.find()
@@ -53,7 +89,7 @@ app.get("/posts/get", (req, res) => {
 
 //Creating POST endpoint for creating a new user in '/users' route
 const addUser = require("./middleware/add-user"); //Importing addUser function from middleware/add-user.js
-app.post("/users/add", async (req, res) => {
+app.post("/users/add", userValidationRules, validate, async (req, res) => {
     console.log(req.body);
     // console.log(`Username: ${req.body.username}`);
     // console.log(`Password: ${req.body.password}`);
