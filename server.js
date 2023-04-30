@@ -51,6 +51,11 @@ app.use(
 //Serving static files from public_html folder using Express.static
 app.use(express.static(path.join(__dirname, "public_html")));
 
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public_html', 'login.html'));
+});
+
+
 //Using express-validator to validate the input
 const userValidationRules = [
     // Username validation
@@ -92,17 +97,18 @@ const postValidationRules = [
 //Creating POST endpoint to add a new post in '/posts' route
 app.post("/posts/add", async (req, res) => {
     const post = new Post({
-        //Creating a new Post object
         user: req.body.user,
         body: req.body.body,
     });
     try {
-        const savedPost = await post.save(); //Saving Post in the database
-        res.status(201).send(savedPost); //Sending success status and the savedPost data
+        const savedPost = await post.save();
+        res.setHeader('Content-Type', 'application/json');
+        res.status(201).send(JSON.stringify(savedPost.toJSON()));
     } catch (err) {
         res.status(500).send(err); //If error occurs, sending Internal Server Error and the error itself
     }
 });
+
 
 //TODO: Delete/comment endpoint after development
 // Creating GET endpoint for retrieving all posts in '/posts' route

@@ -7,7 +7,7 @@ newPostForm.addEventListener('submit', (event) => {
     const formData = new FormData(newPostForm);
     const user = formData.get('user');
     const body = formData.get('body');
-    fetch('/posts', {
+    fetch('/posts/add', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -26,7 +26,7 @@ newPostForm.addEventListener('submit', (event) => {
 });
 
 // Get all posts and display them
-fetch('/posts')
+fetch('/posts/get')
     .then(response => response.json())
     .then((posts) => {
         posts.forEach((post) => {
