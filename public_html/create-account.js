@@ -1,28 +1,36 @@
-const express = require("express");
-const router = express.Router();
-const bcrypt = require("bcrypt");
-const User = require("../models/user");
-const addUser = require("../middleware/add-user");
-const validate = require("../middleware/validate");
+/**
+ * This file handles the form submission of creating a new user account.
+ * It listens to the submit event on the form, extracts the input values,
+ * sends a POST request to the server with the input values in JSON format,
+ * and then handles the server's response accordingly. If there is an
+ * error, it displays the error message on the page.
+ *
+ */
+const form = document.getElementById("create-user-form");
+const errorMessage = document.getElementById("error-message");
 
-router.post("/create", addUser, async (req, res) => {
-    const { username, password, email } = req.body;
+form.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const user = new User({
-        username: username,
-        password: hashedPassword,
-        email: email,
-    });
+    const username = form.elements["username"].value;
+    const password = form.elements["password"].value;
+    const email = form.elements["email"].value;
 
     try {
-        await user.save();
-        res.status(201).send("User created successfully");
+        const response = await fetch("/users/add", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password, email }),
+            credentials: "include",
+        });
+
+        if (response.ok) {
+            window.location.replace("/");
+        } else {
+            const error = await response.json();
+            throw new Error(error.message);
+        }
     } catch (err) {
-        console.error(err);
-        res.status(500).send("Internal Server Error");
+        errorMessage.textContent = err.message;
     }
 });
-
-module.exports = router;

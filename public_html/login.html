@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<!--
+ Description: The HTML for account login page,
+              which uses a form for user credential input.
+-->
 <html>
 <head>
     <title>Login</title>
@@ -7,17 +11,18 @@
     <link rel="stylesheet"
           type="text/css"
           href="style/login-style.css">
+
 </head>
 <body>
 <h1>Welcome back!</h1>
 <p>Login to your Chatter account below or <a href="/create">create one now</a>.</p>
-<form id="login-form" action="/login" method="post">
+<form id="login-form">
     <input type="text" id="username" name="username" placeholder="Username"><br>
     <input type="password" id="password" name="password" placeholder="Password"><br>
     <input type="submit" value="Login">
 </form>
 <div id="error-message"></div>
-<script> src="/login.js"
+<script src="/login.js">
 </script>
 </body>
 </html>
