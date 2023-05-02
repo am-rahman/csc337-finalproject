@@ -1,3 +1,8 @@
+/**
+ Purpose: Contains the styling for the
+ login.html and create-account.html pages
+ */
+
 body {
     background-color: #F5F5F5;
     width: 500px;
@@ -30,7 +35,7 @@ p  {
     width: 400px;
 }
 
-input[type=text], input[type=password] {
+input[type=text], input[type=password], input[type=email] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;

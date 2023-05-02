@@ -26,7 +26,7 @@ async function login(req, res) {
                 username: user.username,
             };
             res.status(200);
-            res.redirect("/chat");
+            res.redirect("/");
         } else {
             // If the passwords don't match, send an error response
             res.status(401);

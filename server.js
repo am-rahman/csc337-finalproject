@@ -55,6 +55,11 @@ app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'public_html', 'login.html'));
 });
 
+app.get('/create', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public_html', 'create-account.html'));
+});
+
+
 //Using express-validator to validate the input
 const userValidationRules = [
     // Username validation
@@ -65,11 +70,6 @@ const userValidationRules = [
         .isLength({ min: 3, max: 15 })
         .withMessage("Username must be between 3 and 15 characters long"),
 
-    // Email validation
-    check("email")
-        .isEmail()
-        .withMessage("Invalid email format")
-        .normalizeEmail(),
 
     // Password validation
     check("password")
@@ -83,7 +83,23 @@ const userValidationRules = [
         .withMessage("Password must contain at least one lowercase letter")
         .matches(/[!@#$%^&*(),.?":{}|<>]/)
         .withMessage("Password must contain at least one special character"),
+
+    // Email validation
+    check("email")
+        .isEmail()
+        .withMessage("Invalid email format")
+        .normalizeEmail(),
 ];
+
+//TODO: delete later
+// const userCreateValidationRules = [
+//         ...userValidationRules,
+//     // Email validation
+//     check("email")
+//         .isEmail()
+//         .withMessage("Invalid email format")
+//         .normalizeEmail(),
+// ];
 
 //TODO: Add validation rules for post
 const postValidationRules = [
@@ -135,7 +151,7 @@ app.post("/users/add", userValidationRules, validate, async (req, res) => {
 });
 
 //Creating POST endpoint for logging in a user in '/users/login' route
-app.post("/login", userValidationRules, validate, async (req, res) => {
+app.post("/login", validate, async (req, res) => {
     login(req, res); //Calling login function from middleware/login.js
 });
 
