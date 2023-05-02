@@ -55,7 +55,6 @@ app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'public_html', 'login.html'));
 });
 
-
 //Using express-validator to validate the input
 const userValidationRules = [
     // Username validation

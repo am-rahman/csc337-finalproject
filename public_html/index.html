@@ -11,17 +11,25 @@
 </head>
 <body>
 <h1>Chatter</h1>
-<form id="new-post-form">
-  <div>
-    <label for="user">User:</label>
-    <input type="text" id="user" name="user">
-  </div>
-  <div>
-    <label for="body">Body:</label>
-    <textarea id="body" name="body"></textarea>
-  </div>
-  <button type="submit">Submit</button>
-</form>
+<div id="sidebar">
+  <ul>
+    <li><a href="#">Logout</a></li>
+    <li><a href="#">Settings</a></li>
+  </ul>
+</div>
+
+<div class="create-post">
+  <form id="new-post-form">
+    <div>
+      <label for="user">User:</label>
+      <input type="text" id="user" name="user">
+    </div>
+    <div>
+      <textarea id="body" name="body" placeholder="Say something..."></textarea>
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+</div>
 <h2>All Posts:</h2>
 <ul id="post-list"></ul>
 <script src="/app.js"></script>
