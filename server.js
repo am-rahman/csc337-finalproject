@@ -55,6 +55,10 @@ app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'public_html', 'login.html'));
 });
 
+app.get('/create', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public_html', 'create-account.html'));
+});
+
 
 //Using express-validator to validate the input
 const userValidationRules = [
