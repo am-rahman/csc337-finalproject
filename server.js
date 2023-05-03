@@ -67,7 +67,7 @@ app.use((req, res, next) => {
 app.get("/login", (req, res) => {
     if (req.isLoggedIn) {
         console.log("User is logged in");
-        res.sendFile(path.join(__dirname, "public_html", "feed.html"));
+        res.redirect("/feed");
     } else {
         res.sendFile(path.join(__dirname, "public_html", "login.html"));
     }
