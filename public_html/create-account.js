@@ -40,11 +40,10 @@ form.addEventListener("submit", async (event) => {
             }
             
             throw new Error(error.message);
-            return;
         }
     } catch (err) {
         if(err.message != "") {
-            errorMessage.textContent = err.message;
+            errorMessage.textContent += err.message;
         }
     }
 });
