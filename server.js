@@ -167,6 +167,8 @@ app.get("/posts/get", (req, res) => {
         });
 });
 
+app.post("/posts/add", postValidationRules, validate, (req, res) => {});
+
 //Creating POST endpoint for creating a new user in '/users' route
 app.post("/users/add", userValidationRules, validate, async (req, res) => {
     // console.log(req.body);

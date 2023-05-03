@@ -14,7 +14,7 @@ const postSchema = new mongoose.Schema({
     body: { type: String, required: true },
     time: { type: Number, default: process.hrtime.bigint() },
     likes: [{ type: ObjectId, ref: "User" }],
-    comments: [{ type: ObjectId, ref: "Comment" }],
+    // comments: [{ type: ObjectId, ref: "Comment" }],
 });
 
 //Creating a conpound index by user (ascending) and time (descending)
@@ -26,7 +26,6 @@ postSchema.index({ user: 1, time: -1 });
  * @property {String} body - The body of the post
  * @property {Number} time - The time the post was created (leave empty to use current time)
  * @property {ObjectId[]} likes - The users who liked the post
- * @property {ObjectId[]} comments - The comments on the post
  */
 const Post = mongoose.model("Post", postSchema);
 
