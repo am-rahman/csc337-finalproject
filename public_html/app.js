@@ -23,7 +23,7 @@ const sidebar = document.getElementById("sidebar");
 newPostForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const formData = new FormData(newPostForm);
-    const user = formData.get('user');
+    // const user = formData.get('user');   // Get from session
     const body = formData.get('body');
     fetch('/posts/add', {
         method: 'POST',
@@ -35,7 +35,7 @@ newPostForm.addEventListener('submit', (event) => {
         .then(response => response.json())
         .then((post) => {
             const li = document.createElement('li');
-            li.innerHTML = `<strong>${post.user}</strong> - ${post.body}`;
+            // li.innerHTML = `<strong>${post.user}</strong> - ${post.body}`;
             postList.appendChild(li);
         })
         .catch((error) => {

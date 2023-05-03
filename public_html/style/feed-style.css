@@ -83,3 +83,24 @@ form button[type="submit"]:hover {
     font-size: 20px;
     color: #E5E6E5;
 }
+
+/*********************/
+
+.user {
+    text-align: right;
+    margin-right: 4%;
+    padding-bottom: 20px;
+}
+
+.like-button {
+    cursor: pointer;
+    background-color: transparent;
+    border-style: none;
+    margin-left: .5%;
+}
+
+.like-button:hover {
+    filter: brightness(1.2);
+    transition: all 0.3s ease;
+
+}
