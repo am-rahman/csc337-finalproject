@@ -2,17 +2,18 @@
  Purpose: Contains the styling for the
  login.html and create-account.html pages
  */
+body {
+    background-image: url('../images/login_background.png');
+    background-size: 100vw 100vh;
+    background-repeat: no-repeat;
+    color: #FFFFFF;
+}
 
 body {
-    background-color: #F5F5F5;
+    background-color: #1A1A1B;
     width: 500px;
     text-align: center;
     margin: 200px auto auto;
-    padding: 50px;
-    border-style: none;
-    border-radius: 20px;
-    box-shadow: 0px 0px 10px 2px grey;
-    font-family: monospace;
 }
 
 p  {
@@ -27,12 +28,29 @@ p  {
     height: 100vh;
 }
 
-.login-box {
-    background-color: #FFFFFF;
+#box {
+    background-color: #161516;
+    width: 100%;
+    padding: 50px;
+    margin-left: -50px;
+    border-style: none;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px 2px #0A0A0A;
+    font-family: monospace;
+}
+
+#box a {
+    text-decoration: none;
+    color: #16A190;
+}
+
+#login-form, #create-user-form {
+    background-color: #161516;
     border-radius: 10px;
     padding: 30px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 400px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 input[type=text], input[type=password], input[type=email] {
@@ -43,11 +61,13 @@ input[type=text], input[type=password], input[type=email] {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    font-family: monospace;
+
 }
 
 input[type=submit] {
     width: 100%;
-    background-color: #1A9272;
+    background-color: #16A190;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -58,7 +78,7 @@ input[type=submit] {
 }
 
 input[type=submit]:hover {
-    background-color: #1EAA86;
+    background-color: #19D5BB;
 }
 
 #error-message {

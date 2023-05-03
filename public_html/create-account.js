@@ -25,7 +25,9 @@ form.addEventListener("submit", async (event) => {
         });
 
         if (response.ok) {
-            window.location.replace("/");
+            errorMessage.style.color = "#16A190";
+            errorMessage.textContent = "Account created! Taking you to login..."
+            setTimeout(redirectToLogin, 2500);
         } else {
             const error = await response.json();
             throw new Error(error.message);
@@ -34,3 +36,7 @@ form.addEventListener("submit", async (event) => {
         errorMessage.textContent = err.message;
     }
 });
+
+function redirectToLogin() {
+    window.location.replace("/login");
+}

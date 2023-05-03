@@ -81,6 +81,14 @@ app.get("/feed", (req, res) => {
     res.sendFile(path.join(__dirname, "public_html", "feed.html"));
 });
 
+app.get("/help", (req, res) => {
+    res.sendFile(path.join(__dirname, "public_html", "help.html"));
+});
+
+app.get("/account-help", (req, res) => {
+    res.sendFile(path.join(__dirname, "public_html", "account-help.html"));
+});
+
 app.get("/create", (req, res) => {
     res.sendFile(path.join(__dirname, "public_html", "create-account.html"));
 });

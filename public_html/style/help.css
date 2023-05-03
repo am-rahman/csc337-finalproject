@@ -1,24 +1,28 @@
-#feed-link, #help-link, #logout-link, #settings-link {
+#feed-link, #logout-link, #settings-link, #display-user {
     color: #84848B;
 }
 
-#display-user {
+#help-link {
     color: #D5D4E3;
 }
 
-#welcome-message {
+#help-message {
     width: 40%;
     margin: auto auto 0;
     color: #84848B;
     font-size: 16px;
-    text-align: center;
+    text-align: left;
 }
 
-#welcome-message a {
+#help-message a {
     text-decoration: none;
     color: #16A190;
 }
 
-#welcome-message a:hover {
+#help-message a:hover {
     color: #19D5BB;
+}
+
+strong {
+    color: #16A190;
 }
