@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema({
     profileImage: String,
     followers: [{ type: ObjectId, ref: "User" }],
     following: [ObjectId],
+    sessions: [String],
 });
 
 // Creating indexes for faster searching
