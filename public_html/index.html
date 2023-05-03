@@ -7,31 +7,29 @@
 
   <link rel="stylesheet"
         type="text/css"
-        href="style/temp_style.css">
+        href="style/common-style.css">
+
+  <link rel="stylesheet"
+        type="text/css"
+        href="style/style.css">
 </head>
 <body>
 <h1>Chatter</h1>
 <div id="sidebar">
   <ul>
-    <li><a href="#">Logout</a></li>
-    <li><a href="#">Settings</a></li>
+    <li><a href="#" id="display-user">Welcome</a></li>
+    <li><a href="/feed" id="feed-link">Feed</a></li>
+    <li><a href="/settings" id="settings-link">Settings</a></li>
+    <li><a href="#" id="help-link">Help</a></li>
+    <li><a href="#" id="logout-link"></a></li>
   </ul>
 </div>
 
-<div class="create-post">
-  <form id="new-post-form">
-    <div>
-      <label for="user">User:</label>
-      <input type="text" id="user" name="user">
-    </div>
-    <div>
-      <textarea id="body" name="body" placeholder="Say something..."></textarea>
-    </div>
-    <button type="submit">Submit</button>
-  </form>
+<div id="welcome-message">
+    <p>Welcome to Chatter! <a href="/login" id="login-link">Login</a> or
+        <a href="/create" id="create-link">create an account</a> to start chatting.
+    </p>
 </div>
-<h2>All Posts:</h2>
-<ul id="post-list"></ul>
 <script src="/app.js"></script>
 </body>
 

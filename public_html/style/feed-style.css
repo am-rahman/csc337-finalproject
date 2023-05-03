@@ -1,0 +1,91 @@
+#sidebar a {
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#settings-link, #help-link, #logout-link {
+    color: #84848B;
+}
+
+#feed-link {
+    color: #D5D4E3;
+}
+
+form {
+    max-width: 40%;
+    margin: 0 auto 14px;
+    background-color: #1C1C1D;
+    padding: 14px;
+    border-radius: 16px;
+    box-shadow: 0px 2px 5px #0A0A0A;
+}
+
+form label {
+    display: block;
+    font-size: 24px;
+    margin-bottom: 12px;
+}
+
+form input[type="text"],
+form textarea {
+    display: block;
+    width: 100%;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 14px;
+    background-color: #D7D8CE;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+form button[type="submit"] {
+    /*display: block;*/
+    margin-left: 80%;
+    width: 18%;
+    background-color: #19D5BB;
+    color: #D7D8CE;
+    border: none;
+    border-radius: 25px;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button[type="submit"]:hover {
+    background-color: #16A190;
+}
+
+#post-list {
+    list-style: none;
+    margin: 0 auto;
+    max-width: 40%;
+    padding: 0;
+}
+
+#post-list li {
+    background-color: #1C1C1D;
+    border-radius: 16px;
+    box-shadow: 0px 2px 5px #0A0A0A;
+    padding: 24px;
+    margin-bottom: 14px;
+    color: #D7D8CE;
+}
+
+#post-list li:last-child {
+    margin-bottom: 0;
+}
+
+#post-list li p {
+    font-size: 24px;
+    margin-bottom: 12px;
+}
+
+#post-list li small {
+    font-size: 20px;
+    color: #657786;
+}

@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
-    <title>Chatter</title>
+    <title>Settings</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet"
           type="text/css"
           href="style/common-style.css">
-
     <link rel="stylesheet"
           type="text/css"
-          href="style/feed-style.css">
+          href="style/settings-style.css">
 </head>
 <body>
-<h1>Chatter</h1>
+<h1>Settings</h1>
 <div id="sidebar">
     <ul>
         <!--    Will change this later to display username-->
@@ -22,20 +21,21 @@
         <li><a href="/feed" id="feed-link">Feed</a></li>
         <li><a href="/settings" id="settings-link">Settings</a></li>
         <li><a href="#" id="help-link">Help</a></li>
-        <li><a href="#" id="logout-link"></a></li>
+        <li id="logout"></li>
     </ul>
 </div>
 
-<div class="create-post">
-    <form id="new-post-form">
-        <div>
-            <textarea id="body" name="body" placeholder="Say something..."></textarea>
-        </div>
-        <button type="submit">Submit</button>
-    </form>
+<div id="settings">
+    <div id="settings-items">
+        <label class="switch" id="toggle">
+            <input type="checkbox">
+            <span class="slider round"></span>
+        </label>
+
+        <p id="dark-mode">Dark mode</p>
+    </div>
 </div>
-<ul id="post-list"></ul>
-<script src="/app.js"></script>
+<script src="/settings.js"></script>
 </body>
 
 </html>

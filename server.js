@@ -9,6 +9,8 @@ const session = require("express-session"); //Express-session is used to create 
 const crypto = require("crypto");
 const login = require("./middleware/login"); //Custom middleware to handle user login
 const cors = require("cors"); //CORS is a node.js package for providing a Connect/Express middleware that can be used to enable CORS with various options.
+const cookieParser = require('cookie-parser');
+
 
 const app = express();
 const port = 3000;
@@ -47,12 +49,22 @@ app.use(
 //  */
 
 // app.use(cors());
+app.use(cookieParser());
+
 
 //Serving static files from public_html folder using Express.static
 app.use(express.static(path.join(__dirname, "public_html")));
 
 app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'public_html', 'login.html'));
+});
+
+app.get('/settings', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public_html', 'settings.html'));
+});
+
+app.get('/feed', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public_html', 'feed.html'));
 });
 
 app.get('/create', (req, res) => {
@@ -89,6 +101,18 @@ const userValidationRules = [
         .isEmail()
         .withMessage("Invalid email format")
         .normalizeEmail(),
+];
+
+// Validation rules for just username when logging in,
+// NOT IN USE
+const loginValidationRules = [
+    // Username validation
+    check("username")
+        .trim()
+        .isAlphanumeric()
+        .withMessage("Username must contain only letters and numbers")
+        .isLength({ min: 3, max: 15 })
+        .withMessage("Username must be between 3 and 15 characters long"),
 ];
 
 //TODO: delete later

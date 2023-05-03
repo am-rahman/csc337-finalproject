@@ -1,12 +1,26 @@
-ul {
-    list-style: none;
+#sidebar a {
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
 }
 
-li {
-    border-style: solid;
-    border-color: black;
-    border-radius: 5px;
-    width: 500px;
-    margin: 10px;
-    padding: 10px;
+#feed-link, #help-link, #logout-link, #settings-link {
+    color: #84848B;
+}
+
+#display-user {
+    color: #D5D4E3;
+}
+
+#welcome-message {
+    width: 40%;
+    margin: auto auto 0;
+    color: #84848B;
+    font-size: 16px;
+    text-align: center;
+}
+
+#welcome-message a {
+    text-decoration: none;
+    color: #16A190;
 }

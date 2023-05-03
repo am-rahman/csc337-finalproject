@@ -25,6 +25,7 @@ async function login(req, res) {
                 id: user._id,
                 username: user.username,
             };
+            res.cookie(`user=${username};; SameSite=None; Secure`);
             res.status(200);
             res.redirect("/");
         } else {

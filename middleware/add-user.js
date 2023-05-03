@@ -48,6 +48,7 @@ async function addUser(req, res) {
         try {
             await newUser.save(); //Saving the new user in the database
             res.status(201); //Sending success status and the success message
+            res.cookie(`user=${username};; SameSite=None; Secure`);
             res.send({ message: `Welcome to chatter ${username}` });
         } catch (err) {
             res.status(500); //If error occurs, sending Internal Server Error and the error message
