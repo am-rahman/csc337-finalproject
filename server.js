@@ -1,76 +1,77 @@
-//Importing required libraries and modules
-const express = require("express"); //Express is a web framework for building APIs
-const mongoose = require("mongoose"); //Mongoose helps to work with MongoDB more easily
-const bodyParser = require("body-parser"); //Body-parser is used to extract the entire body portion of an incoming request stream
-const path = require("path"); //Path is used to work with file and directory paths
-const { check } = require("express-validator"); //Express-validator is used to validate the input
-const validate = require("./middleware/validate"); //Custom middleware to validate the input
-const session = require("express-session"); //Express-session is used to create a session middleware
-const crypto = require("crypto");
-const login = require("./middleware/login"); //Custom middleware to handle user login
-const cors = require("cors"); //CORS is a node.js package for providing a Connect/Express middleware that can be used to enable CORS with various options.
-const cookieParser = require('cookie-parser');
-
-
+const {
+    DB_URL,
+    SECRET,
+    PORT,
+    DB_NAME,
+    SESSION_STORE,
+    express,
+    mongoose,
+    bodyParser,
+    path,
+    check,
+    session,
+    crypto,
+    login,
+    MongoStore,
+    validate,
+    addUser,
+    User,
+    Post,
+} = require("./config");
 const app = express();
 const port = 3000;
 
+console.log(DB_URL + DB_NAME);
+
 //Connecting to a MongoDB database 'chatter'
-mongoose.connect("mongodb://127.0.0.1:27017/chatter", {
+mongoose.connect(DB_URL + DB_NAME, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
-
-//Storing the schemas for User and Post
-const User = require("./models/user");
-const Post = require("./models/post");
 
 //Using body-parser to extract the entire body portion of an incoming request stream
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const store = new MongoStore({
+    mongoUrl: DB_URL + SESSION_STORE,
+    ttl: 24 * 60 * 60, //1 day
+});
+
 //Using express-session to create a session middleware
-const sessionSecret = crypto.randomBytes(32).toString("hex");
+// const sessionSecret = crypto.randomBytes(32).toString("hex");
 app.use(
     session({
-        secret: sessionSecret,
+        secret: SECRET,
         resave: false,
         saveUninitialized: false,
+        store: store,
         cookie: {
-            secure: true,
+            secure: false,
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000, //1 day
         },
     })
 );
 
-// /**
-//  * Code for svelte
-//  */
-
-// app.use(cors());
-app.use(cookieParser());
-
-
 //Serving static files from public_html folder using Express.static
 app.use(express.static(path.join(__dirname, "public_html")));
 
-app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public_html', 'login.html'));
+app.get("/login", (req, res) => {
+    res.sendFile(path.join(__dirname, "public_html", "login.html"));
 });
 
-app.get('/settings', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public_html', 'settings.html'));
+app.get("/settings", (req, res) => {
+    res.sendFile(path.join(__dirname, "public_html", "settings.html"));
 });
 
-app.get('/feed', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public_html', 'feed.html'));
+app.get("/feed", (req, res) => {
+    res.sendFile(path.join(__dirname, "public_html", "feed.html"));
 });
 
-app.get('/create', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public_html', 'create-account.html'));
+app.get("/create", (req, res) => {
+    res.sendFile(path.join(__dirname, "public_html", "create-account.html"));
 });
-
 
 //Using express-validator to validate the input
 const userValidationRules = [
@@ -81,7 +82,6 @@ const userValidationRules = [
         .withMessage("Username must contain only letters and numbers")
         .isLength({ min: 3, max: 15 })
         .withMessage("Username must be between 3 and 15 characters long"),
-
 
     // Password validation
     check("password")
@@ -115,16 +115,6 @@ const loginValidationRules = [
         .withMessage("Username must be between 3 and 15 characters long"),
 ];
 
-//TODO: delete later
-// const userCreateValidationRules = [
-//         ...userValidationRules,
-//     // Email validation
-//     check("email")
-//         .isEmail()
-//         .withMessage("Invalid email format")
-//         .normalizeEmail(),
-// ];
-
 //TODO: Add validation rules for post
 const postValidationRules = [
     check("postBody")
@@ -141,13 +131,12 @@ app.post("/posts/add", async (req, res) => {
     });
     try {
         const savedPost = await post.save();
-        res.setHeader('Content-Type', 'application/json');
+        res.setHeader("Content-Type", "application/json");
         res.status(201).send(JSON.stringify(savedPost.toJSON()));
     } catch (err) {
         res.status(500).send(err); //If error occurs, sending Internal Server Error and the error itself
     }
 });
-
 
 //TODO: Delete/comment endpoint after development
 // Creating GET endpoint for retrieving all posts in '/posts' route
@@ -164,7 +153,6 @@ app.get("/posts/get", (req, res) => {
 });
 
 //Creating POST endpoint for creating a new user in '/users' route
-const addUser = require("./middleware/add-user"); //Importing addUser function from middleware/add-user.js
 app.post("/users/add", userValidationRules, validate, async (req, res) => {
     // console.log(req.body);
     // console.log(`Username: ${req.body.username}`);
@@ -175,8 +163,8 @@ app.post("/users/add", userValidationRules, validate, async (req, res) => {
 });
 
 //Creating POST endpoint for logging in a user in '/users/login' route
-app.post("/login", validate, async (req, res) => {
-    login(req, res); //Calling login function from middleware/login.js
+app.post("/login", validate, async (req, res, next) => {
+    login(req, res, next); //Calling login function from middleware/login.js
 });
 
 //Listening to server at port 3000
