@@ -6,9 +6,10 @@ const path = require("path"); //Path is used to work with file and directory pat
 const { check } = require("express-validator"); //Express-validator is used to validate the input
 const session = require("express-session"); //Express-session is used to create a session middleware
 const crypto = require("crypto");
-const login = require("./middleware/login"); //Custom middleware to handle user login
 const MongoStore = require("connect-mongo"); //MongoStore is used to store session data in MongoDB
 
+const authorize = require("./middleware/authorize"); //Custom middleware to check if the user is logged in
+const login = require("./middleware/login"); //Custom middleware to handle user login
 const validate = require("./middleware/validate"); //Custom middleware to validate the input
 const addUser = require("./middleware/add-user"); //Custom middleware to create a new user in the database
 
@@ -41,4 +42,5 @@ module.exports = {
     addUser,
     User,
     Post,
+    authorize,
 };

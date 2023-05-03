@@ -17,6 +17,7 @@ const {
     addUser,
     User,
     Post,
+    authorize,
 } = require("./config");
 const app = express();
 const port = 3000;
@@ -57,8 +58,19 @@ app.use(
 //Serving static files from public_html folder using Express.static
 app.use(express.static(path.join(__dirname, "public_html")));
 
+app.use(authorize); //Using authorize middleware to check if the user is logged in
+app.use((req, res, next) => {
+    console.log(`Incoming request: ${req.method} ${req.path}`);
+    next();
+});
+
 app.get("/login", (req, res) => {
-    res.sendFile(path.join(__dirname, "public_html", "login.html"));
+    if (req.isLoggedIn) {
+        console.log("User is logged in");
+        res.sendFile(path.join(__dirname, "public_html", "feed.html"));
+    } else {
+        res.sendFile(path.join(__dirname, "public_html", "login.html"));
+    }
 });
 
 app.get("/settings", (req, res) => {
