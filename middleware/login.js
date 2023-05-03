@@ -27,7 +27,7 @@ async function login(req, res) {
             };
             res.cookie(`user=${username};; SameSite=None; Secure`);
             res.status(200);
-            res.redirect("/");
+            res.redirect("/feed");
         } else {
             // If the passwords don't match, send an error response
             res.status(401);

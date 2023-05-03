@@ -25,7 +25,7 @@ form.addEventListener("submit", async (event) => {
         });
 
         if (response.ok) {
-            window.location.replace("/");
+            window.location.replace("/feed");
         } else {
             const error = await response.json();
             throw new Error(error.message);
