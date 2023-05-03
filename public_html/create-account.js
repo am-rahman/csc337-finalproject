@@ -29,11 +29,23 @@ form.addEventListener("submit", async (event) => {
             errorMessage.textContent = "Account created! Taking you to login..."
             setTimeout(redirectToLogin, 2500);
         } else {
+            errorMessage.textContent = "";
             const error = await response.json();
+
+            if(response.status == 422) {
+                const errors = error.errors;
+                errors.forEach((error) => {
+                    errorMessage.textContent += error.msg+'\n';
+                });
+            }
+            
             throw new Error(error.message);
+            return;
         }
     } catch (err) {
-        errorMessage.textContent = err.message;
+        if(err.message != "") {
+            errorMessage.textContent = err.message;
+        }
     }
 });
 
