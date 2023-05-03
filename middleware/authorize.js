@@ -1,4 +1,5 @@
 const crypto = require("crypto");
+const path = require("path");
 
 async function authorize(req, res, next) {
     console.log("Incoming request:", req.method, req.path);
@@ -22,7 +23,7 @@ async function authorize(req, res, next) {
         req.sessionStore.get(req.sessionID, (error, session) => {
             if (error) {
                 console.error(`Error getting session from the store: ${error}`);
-                return res.sendStatus(500);
+                res.sendStatus(500);
             }
 
             if (session) {
@@ -32,19 +33,38 @@ async function authorize(req, res, next) {
                 console.log(
                     `[authorize] sessionID in DB: ${session.sessionID}`
                 );
-                if (req.method === "GET" && req.path === "/login") {
+                if (
+                    (req.method === "GET" && req.path === "/login") ||
+                    (req.method === "GET" && req.path === "/create")
+                ) {
                     res.redirect("/feed");
                 } else {
                     next();
                 }
             } else {
                 console.log(`[authorize] No session found in the database`);
-                res.redirect("/login");
+                if (
+                    (req.method === "GET" && req.path === "/create") ||
+                    (req.method === "GET" && req.path === "/login")
+                ) {
+                    next();
+                } else if (req.method === "GET") {
+                    res.redirect("/login");
+                } else {
+                    next();
+                }
             }
         });
     } else {
         console.log(`[authorize] No valid session found in express-session`);
-        res.redirect("/login");
+        if (
+            (req.method === "GET" && req.path === "/create") ||
+            (req.method === "GET" && req.path === "/login")
+        ) {
+            next();
+        } else {
+            res.redirect("/login");
+        }
     }
 }
 
