@@ -45,7 +45,8 @@ async function authorize(req, res, next) {
                 console.log(`[authorize] No session found in the database`);
                 if (
                     (req.method === "GET" && req.path === "/create") ||
-                    (req.method === "GET" && req.path === "/login")
+                    (req.method === "GET" && req.path === "/login") ||
+                    (req.method === "GET" && req.path === "/help")
                 ) {
                     next();
                 } else if (req.method === "GET") {
