@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chatter</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet"
+          type="text/css"
+          href="style/common-style.css">
+
+    <link rel="stylesheet"
+          type="text/css"
+          href="style/feed-style.css">
+</head>
+<body>
+<h1><img src= "images/icon.png"
+         id="icon"
+         width="48"
+         height="48"/>hatter</h1>
+<div id="sidebar">
+    <ul>
+        <!--    Will change this later to display username-->
+        <li><a href="#" id="display-user"></a>Welcome</li>
+        <li><a href="/feed" id="feed-link">Feed</a></li>
+        <li><a href="/settings" id="settings-link">Settings</a></li>
+        <li><a href="/account-help" id="help-link">Help</a></li>
+        <li><a href="#" id="logout-link"></a></li>
+    </ul>
+</div>
+
+<div class="create-post">
+    <form id="new-post-form">
+        <div>
+            <textarea id="body" name="body" placeholder="Say something..."></textarea>
+        </div>
+        <button type="submit">Chat</button>
+    </form>
+</div>
+<ul id="post-list"></ul>
+<script src="/app.js"></script>
+</body>
+
+</html>
