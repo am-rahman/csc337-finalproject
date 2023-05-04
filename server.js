@@ -20,7 +20,7 @@ const {
     authorize,
 } = require("./config");
 const app = express();
-const port = 3000;
+const port = PORT;
 
 console.log(DB_URL + DB_NAME);
 
@@ -193,6 +193,37 @@ app.get("/users/:searchTerm", async (req, res) => {
 
         // Return the search results
         res.status(200).json({ users });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.post("/posts/:postId/like", async (req, res) => {
+    try {
+        const postId = req.params.postId;
+        const username = req.session.username; // Get the username from the session
+
+        const post = await Post.findById(postId);
+
+        if (!post) {
+            return res.status(404).json({ error: "Post not found" });
+        }
+
+        const userIndex = post.likes.indexOf(username);
+
+        if (userIndex === -1) {
+            // User has not liked the post yet
+            post.likes.push(username);
+            post.likeCount++;
+        } else {
+            // User has already liked the post
+            post.likes.splice(userIndex, 1);
+            post.likeCount--;
+        }
+
+        await post.save();
+
+        res.status(200).json({ message: "Like updated successfully", post });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

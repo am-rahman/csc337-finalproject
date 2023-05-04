@@ -14,7 +14,8 @@ const postSchema = new mongoose.Schema({
     },
     body: { type: String, required: true },
     time: { type: Number, default: () => Number(process.hrtime.bigint()) },
-    likes: [{ type: ObjectId, ref: "User" }],
+    likes: [{ type: String, ref: "User" }],
+    likeCount: { type: Number, default: 0 },
     // comments: [{ type: ObjectId, ref: "Comment" }],
 });
 
