@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
     profileImage: String,
     followers: [{ type: ObjectId, ref: "User" }],
     following: [ObjectId],
-    sessions: [String],
+    //TODO: remove/keep posts: [{ type: ObjectId, ref: "Post" }],
 });
 
 // Creating indexes for faster searching

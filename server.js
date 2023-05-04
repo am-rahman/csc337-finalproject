@@ -132,24 +132,24 @@ const loginValidationRules = [
 
 //TODO: Add validation rules for post
 const postValidationRules = [
-    check("postBody")
+    check("body")
         .trim()
         .isLength({ min: 1, max: 200 })
         .withMessage("Post must be between 1 and 200 characters long"),
 ];
 
-//Creating POST endpoint to add a new post in '/posts' route
-app.post("/posts/add", async (req, res) => {
-    const post = new Post({
-        user: req.body.user,
-        body: req.body.body,
-    });
+app.post("/posts/add", postValidationRules, validate, async (req, res) => {
     try {
-        const savedPost = await post.save();
-        res.setHeader("Content-Type", "application/json");
-        res.status(201).send(JSON.stringify(savedPost.toJSON()));
+        const { body } = req.body;
+        const { username } = req.session;
+
+        const post = new Post({ body: body, user: username });
+        await post.save();
+        console.log(`New post added by ${username}: ${body}`);
+        res.sendStatus(200);
     } catch (err) {
-        res.status(500).send(err); //If error occurs, sending Internal Server Error and the error itself
+        console.error(err);
+        res.status(500).send(err);
     }
 });
 
