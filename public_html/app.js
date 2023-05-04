@@ -67,12 +67,14 @@ function logID(id) {
                 const parent = document.getElementById(id);
                 const likeCount = parent.lastChild;
                 const likes = likeCount.innerText;
-                likeCount.innerText = parseInt(likes - 1);
+                const num = parseInt(likes) - 1;
+                likeCount.innerText = num.toString();
             } else if (response.status == 201) {
                 const parent = document.getElementById(id);
                 const likeCount = parent.lastChild;
                 const likes = likeCount.innerText;
-                likeCount.innerText = parseInt(likes + 1);
+                const num = parseInt(likes) + 1;
+                likeCount.innerText = num.toString();
             }
         })
         .catch((error) => {
