@@ -104,3 +104,7 @@ form button[type="submit"]:hover {
     transition: all 0.3s ease;
 
 }
+
+.like-button:active {
+    transform: translateY(-5px);
+}

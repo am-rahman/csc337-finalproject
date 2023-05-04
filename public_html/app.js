@@ -20,6 +20,15 @@ newPostForm.addEventListener("submit", (event) => {
         .catch((error) => {
             console.error(error);
         });
+
+    /**
+     * *********************
+     * 
+     * PAGE RELOAD
+     * 
+     * *********************
+     */
+    location.reload();
 });
 
 // Get all posts and display them
