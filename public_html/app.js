@@ -46,7 +46,7 @@ fetch("/posts/get")
                             ><img src="/images/like.png"
                             width="25"
                             height="25"
-                            ></button><span id="like-count">${post.likeCount}</span>`
+                            ></button><span class="like-count">${post.likeCount}</span>`
             postList.appendChild(li);
         });
     })
@@ -64,11 +64,13 @@ function logID(id) {
         .then((response) => {
             response.json()
             if(response.status == 200) {
-                document.getElementById(id).getElementById("like-count") -= 1;
+                const parent = document.getElementById(id);
+                parent.querySelectorAll("span")[0].innerText -= 1;
             } else if (response.status == 201) {
-                document.getElementById(id).getElementById("like-count") += 1;
+                const parent = document.getElementById(id);
+                parent.querySelectorAll("span")[0].innerText += 1;
             }
-        });
+        })
         .catch((error) => {
             console.error(error);
         });
