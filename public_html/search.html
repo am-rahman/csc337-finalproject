@@ -11,7 +11,8 @@
 
     <link rel="stylesheet"
           type="text/css"
-          href="style/feed-style.css">
+          href="style/search-style.css">
+
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 </head>
 <body>
@@ -21,9 +22,9 @@
          height="48"/>hatter</h1>
 <div id="sidebar">
     <ul>
-        <!--    Will change this later to display username-->
         <li><a href="#" id="display-user"></a>Welcome</li>
         <li><a href="/feed" id="feed-link">Feed</a></li>
+        <li><a href="/search" id="search-link">Search</a></li>
         <li><a href="/settings" id="settings-link">Settings</a></li>
         <li><a href="/account-help" id="help-link">Help</a></li>
         <li><a href="#" id="logout-link"></a></li>
@@ -31,15 +32,15 @@
 </div>
 
 <div class="create-post">
-    <form id="new-post-form">
-        <div>
+    <div id="search-bar">
+        <form id="search-form">
             <textarea id="body" name="body" rows="1" placeholder="Search Users"></textarea>
-        </div>
-        <button type="submit"></button>
-    </form>
+            <button type="submit"><img src="images/search.svg" width="14" height="14"></button>
+        </form>
+    </div>
 </div>
-<ul id="post-list"></ul>
-<script src="/app.js"></script>
+<ul id="user-list"></ul>
+<script src="/search.js"></script>
 </body>
 
 </html>
