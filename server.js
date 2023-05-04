@@ -234,6 +234,28 @@ app.post("/login", validate, async (req, res, next) => {
     login(req, res, next); //Calling login function from middleware/login.js
 });
 
+//Creating POST endpoint for logging out a user in '/logout' route
+app.post("/logout", async (req, res) => {
+    try {
+        const { username } = req.session;
+        console.log(`Logging out ${username}`);
+
+        // Destroy the session
+        req.session.destroy((err) => {
+            if (err) {
+                console.error(err);
+                res.status(500).send("Server Error");
+            } else {
+                res.clearCookie("connect.sid"); // Clear the cookie
+                res.redirect("/");
+            }
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Server Error");
+    }
+});
+
 //Listening to server at port 3000
 app.listen(port, () => {
     console.log(`Server listening at http://localhost:${port}`); //Logging that application is running and on which port
