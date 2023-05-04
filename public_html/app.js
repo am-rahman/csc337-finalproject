@@ -7,7 +7,7 @@ const sidebar = document.getElementById("sidebar");
 newPostForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const formData = new FormData(newPostForm);
-    const user = formData.get("user");
+    // const user = formData.get("user");
     const body = formData.get("body");
     fetch("/posts/add", {
         method: "POST",
@@ -29,7 +29,7 @@ fetch("/posts/get")
         posts.forEach((post) => {
             const li = document.createElement("li");
             li.className = "single-post";
-            li.id = id=`${post._id}`;
+            li.id =`${post._id}`;
             li.innerHTML = `${post.body}<br><br>
                             <div class="user">
                             <strong>-${post.user}</strong></div>

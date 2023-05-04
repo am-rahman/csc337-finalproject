@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html">
+<html>
 <head>
-    <title>Settings</title>
+    <title>Chatter</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet"
           type="text/css"
           href="style/common-style.css">
+
     <link rel="stylesheet"
           type="text/css"
-          href="style/settings-style.css">
+          href="style/search-style.css">
 
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 </head>
@@ -21,27 +22,25 @@
          height="48"/>hatter</h1>
 <div id="sidebar">
     <ul>
-        <!--    Will change this later to display username-->
         <li><a href="#" id="display-user"></a>Welcome</li>
         <li><a href="/feed" id="feed-link">Feed</a></li>
         <li><a href="/search" id="search-link">Search</a></li>
         <li><a href="/settings" id="settings-link">Settings</a></li>
         <li><a href="/account-help" id="help-link">Help</a></li>
-        <li id="logout"></li>
+        <li><a href="#" id="logout-link"></a></li>
     </ul>
 </div>
 
-<div id="settings">
-    <div id="settings-items">
-        <label class="switch" id="toggle">
-            <input type="checkbox">
-            <span class="slider round"></span>
-        </label>
-
-        <p id="dark-mode">Light mode coming soon...</p>
+<div class="create-post">
+    <div id="search-bar">
+        <form id="search-form">
+            <textarea id="body" name="body" rows="1" placeholder="Search Users"></textarea>
+            <button type="submit"><img src="images/search.svg" width="14" height="14"></button>
+        </form>
     </div>
 </div>
-<script src="/settings.js"></script>
+<ul id="user-list"></ul>
+<script src="/search.js"></script>
 </body>
 
 </html>

@@ -80,6 +80,10 @@ app.get("/help", (req, res) => {
     res.sendFile(path.join(__dirname, "public_html", "help.html"));
 });
 
+app.get("/search", (req, res) => {
+    res.sendFile(path.join(__dirname, "public_html", "search.html"));
+});
+
 app.get("/account-help", (req, res) => {
     res.sendFile(path.join(__dirname, "public_html", "account-help.html"));
 });
