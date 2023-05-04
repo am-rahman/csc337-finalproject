@@ -7,7 +7,7 @@ const sidebar = document.getElementById("sidebar");
 newPostForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const formData = new FormData(newPostForm);
-    const user = formData.get("user");
+    // const user = formData.get("user");
     const body = formData.get("body");
     fetch("/posts/add", {
         method: "POST",
