@@ -65,10 +65,14 @@ function logID(id) {
             response.json()
             if(response.status == 200) {
                 const parent = document.getElementById(id);
-                parent.querySelectorAll("span")[0].innerText -= 1;
+                const likeCount = parent.lastChild;
+                const likes = likeCount.innerText;
+                likeCount.innerText = parseInt(likes - 1);
             } else if (response.status == 201) {
                 const parent = document.getElementById(id);
-                parent.querySelectorAll("span")[0].innerText += 1;
+                const likeCount = parent.lastChild;
+                const likes = likeCount.innerText;
+                likeCount.innerText = parseInt(likes + 1);
             }
         })
         .catch((error) => {
