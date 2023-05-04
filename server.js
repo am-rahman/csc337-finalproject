@@ -182,9 +182,6 @@ app.get("/users/:searchTerm", async (req, res) => {
     try {
         const searchTerm = req.params.searchTerm;
 
-        // Import the User model
-        const User = require("./User");
-
         // Search for users with a username that starts with the searchTerm (case-insensitive)
         const users = await User.find({
             username: new RegExp("^" + searchTerm, "i"),
