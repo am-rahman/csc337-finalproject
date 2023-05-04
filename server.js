@@ -215,15 +215,15 @@ app.post("/posts/:postId/like", async (req, res) => {
             // User has not liked the post yet
             post.likes.push(username);
             post.likeCount++;
+            res.status(201).json({ message: "Post Liked", post });
         } else {
             // User has already liked the post
             post.likes.splice(userIndex, 1);
             post.likeCount--;
+            res.status(200).json({ message: "Post Unliked", post });
         }
 
         await post.save();
-
-        res.status(200).json({ message: "Like updated successfully", post });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -253,6 +253,23 @@ app.post("/logout", async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(500).send("Server Error");
+    }
+});
+
+// Route handler for fetching a user's page with their posts
+app.get("/user/:username/page", async (req, res) => {
+    try {
+        // Extract the username from the request parameters
+        const username = req.params.username;
+
+        // Fetch all posts authored by the specified user using the Post model
+        const posts = await Post.find({ author: username });
+
+        // Send a successful response with status code 200 and the fetched posts as JSON
+        res.status(200).json({ posts });
+    } catch (error) {
+        // In case of any error, send an error response with status code 500 and the error message as JSON
+        res.status(500).json({ error: error.message });
     }
 });
 
