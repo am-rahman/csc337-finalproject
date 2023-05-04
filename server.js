@@ -177,6 +177,26 @@ app.post("/users/add", userValidationRules, validate, async (req, res) => {
     addUser(req, res); //Calling addUser function from middleware/add-user.js
 });
 
+//Creating GET endpoint to search for users whose username starts with searchTerm
+app.get("/users/:searchTerm", async (req, res) => {
+    try {
+        const searchTerm = req.params.searchTerm;
+
+        // Import the User model
+        const User = require("./User");
+
+        // Search for users with a username that starts with the searchTerm (case-insensitive)
+        const users = await User.find({
+            username: new RegExp("^" + searchTerm, "i"),
+        });
+
+        // Return the search results
+        res.status(200).json({ users });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 //Creating POST endpoint for logging in a user in '/users/login' route
 app.post("/login", validate, async (req, res, next) => {
     login(req, res, next); //Calling login function from middleware/login.js
