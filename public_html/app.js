@@ -2,21 +2,6 @@ const newPostForm = document.getElementById("new-post-form");
 const postList = document.getElementById("post-list");
 const sidebar = document.getElementById("sidebar");
 
-// Will update this later
-// function getUser() {
-//     const value = document.cookie;
-//     const parts = value.split("user=");
-//     const user = parts[1];
-//
-//     if(!user) {
-//         document.getElementById("display-user").innerHTML = "<a href=\"/login\">Login</a>";
-//         return;
-//     }
-//
-//     document.getElementById("display-user").innerHTML = `Hey there, ${user}`;
-//     const logout = document.getElementById("logout");
-//     logout.innerHTML = "<a href=\"/login\">Logout</a>";
-// }
 
 // Submit new post form
 newPostForm.addEventListener("submit", (event) => {
@@ -32,11 +17,6 @@ newPostForm.addEventListener("submit", (event) => {
         body: JSON.stringify({ body }),
     })
         .then((response) => response.json())
-        .then((post) => {
-            const li = document.createElement("li");
-            li.innerHTML = `<strong>${post.user}</strong> - ${post.body}`;
-            postList.appendChild(li);
-        })
         .catch((error) => {
             console.error(error);
         });
@@ -48,10 +28,24 @@ fetch("/posts/get")
     .then((posts) => {
         posts.forEach((post) => {
             const li = document.createElement("li");
-            li.innerHTML = `<strong>${post.user}</strong> - ${post.body}`;
+            li.className = "single-post";
+            li.id = id=`${post._id}`;
+            li.innerHTML = `${post.body}<br><br>
+                            <div class="user">
+                            <strong>-${post.user}</strong></div>
+                            <button class="like-button" onclick="logID(this.parentNode.id)"
+                            ><img src="/images/like.png"
+                            width="25"
+                            height="25"
+                            ></button>`
             postList.appendChild(li);
         });
     })
     .catch((error) => {
         console.error(error);
     });
+
+
+function logID(id) {
+    console.log(id);
+}
