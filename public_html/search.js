@@ -7,7 +7,7 @@ newPostForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const formData = new FormData(newPostForm);
     const searchTerm = formData.get("body");
-    fetch(`/users/${searchTerm}`)
+    const response = fetch(`/users/${searchTerm}`)
         .then((response) => response.json())
         .then((data) => {
             const users = data.users;

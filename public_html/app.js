@@ -46,7 +46,7 @@ fetch("/posts/get")
                             ><img src="/images/like.png"
                             width="25"
                             height="25"
-                            ></button>`
+                            ></button><span id="like-count">${post.likeCount}</span>`
             postList.appendChild(li);
         });
     })
@@ -56,5 +56,20 @@ fetch("/posts/get")
 
 
 function logID(id) {
-    console.log(id);
+    const response = fetch(`/posts/${id}/like`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        })
+        .then((response) => {
+            response.json()
+            if(response.status == 200) {
+                document.getElementById(id).getElementById("like-count") -= 1;
+            } else if (response.status == 201) {
+                document.getElementById(id).getElementById("like-count") += 1;
+            }
+        });
+        .catch((error) => {
+            console.error(error);
+        });
 }

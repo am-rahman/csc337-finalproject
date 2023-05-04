@@ -108,3 +108,8 @@ form button[type="submit"]:hover {
 .like-button:active {
     transform: translateY(-5px);
 }
+
+#like-count {
+    padding-left: 5px;
+    vertical-align: 5px;
+}
